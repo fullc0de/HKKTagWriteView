@@ -22,7 +22,6 @@
 		DA3735921880DAF300241916 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA3735901880DAF300241916 /* InfoPlist.strings */; };
 		DA3735941880DAF300241916 /* TagWriteViewTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3735931880DAF300241916 /* TagWriteViewTestTests.m */; };
 		DA37359F1880DB1200241916 /* HKKTagWriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA37359E1880DB1200241916 /* HKKTagWriteView.m */; };
-		DA3735A218810AD300241916 /* HKKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3735A118810AD300241916 /* HKKTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +56,6 @@
 		DA3735931880DAF300241916 /* TagWriteViewTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagWriteViewTestTests.m; sourceTree = "<group>"; };
 		DA37359D1880DB1200241916 /* HKKTagWriteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKKTagWriteView.h; sourceTree = "<group>"; };
 		DA37359E1880DB1200241916 /* HKKTagWriteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKKTagWriteView.m; sourceTree = "<group>"; };
-		DA3735A018810AD300241916 /* HKKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKKTextField.h; sourceTree = "<group>"; };
-		DA3735A118810AD300241916 /* HKKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKKTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +124,6 @@
 				DA37356F1880DAF300241916 /* Supporting Files */,
 				DA37359D1880DB1200241916 /* HKKTagWriteView.h */,
 				DA37359E1880DB1200241916 /* HKKTagWriteView.m */,
-				DA3735A018810AD300241916 /* HKKTextField.h */,
-				DA3735A118810AD300241916 /* HKKTextField.m */,
 			);
 			path = TagWriteViewTest;
 			sourceTree = "<group>";
@@ -263,7 +258,6 @@
 				DA37359F1880DB1200241916 /* HKKTagWriteView.m in Sources */,
 				DA37357F1880DAF300241916 /* HKKViewController.m in Sources */,
 				DA3735751880DAF300241916 /* main.m in Sources */,
-				DA3735A218810AD300241916 /* HKKTextField.m in Sources */,
 				DA3735791880DAF300241916 /* HKKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +467,7 @@
 				DA3735991880DAF300241916 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DA37359A1880DAF300241916 /* Build configuration list for PBXNativeTarget "TagWriteViewTestTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +476,7 @@
 				DA37359C1880DAF300241916 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

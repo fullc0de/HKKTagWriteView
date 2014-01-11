@@ -7,18 +7,17 @@
 //
 
 #import "HKKTagWriteView.h"
-#import "HKKTextField.h"
 
 @import QuartzCore;
 
 @interface HKKTagWriteView  ()
 <
-    UITextFieldDelegate
+    UITextViewDelegate
 >
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *tagViews;
-@property (nonatomic, strong) HKKTextField *inputView;
+@property (nonatomic, strong) UITextView *inputView;
 
 @property (nonatomic, strong) NSMutableArray *tagsMade;
 
@@ -75,7 +74,32 @@
     return _tagsMade;
 }
 
+- (void)setFocusOnAddTag:(BOOL)focusOnAddTag
+{
+    _focusOnAddTag = focusOnAddTag;
+    if (_focusOnAddTag)
+    {
+        [_inputView becomeFirstResponder];
+    }
+    else
+    {
+        [_inputView resignFirstResponder];
+    }
+}
+
 #pragma mark - Interfaces
+- (void)clear
+{
+    _inputView.text = @"";
+    [_tagsMade removeAllObjects];
+    [self reArrangeSubViews];
+}
+
+- (void)setTextToInputSlot:(NSString *)text
+{
+    _inputView.text = text;
+}
+
 - (void)addTags:(NSArray *)tags
 {
     for (NSString *tag in tags)
@@ -155,9 +179,12 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [self addSubview:_scrollView];
 
-    _inputView = [[HKKTextField alloc] init];
+    _inputView = [[UITextView alloc] init];
     _inputView.autocorrectionType = UITextAutocorrectionTypeNo;
     _inputView.delegate = self;
+    _inputView.returnKeyType = UIReturnKeyDone;
+    _inputView.contentInset = UIEdgeInsetsMake(-5, 0, 0, 0);
+    _inputView.scrollsToTop = NO;
     [_scrollView addSubview:_inputView];
 }
 
@@ -327,75 +354,9 @@
     return tagBtn;
 }
 
-#pragma mark - UI Actions
-- (void)tagButtonDidPushed:(id)sender
+- (void)detectBackspace
 {
-    UIButton *btn = sender;
-    NSLog(@"tagButton pushed: %@, idx = %ld", btn.titleLabel.text, (long)btn.tag);
-}
-
-#pragma mark - UITextFieldDelegate
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if ([string isEqualToString:@" "])
-    {
-        [self addTagToLast:textField.text animated:YES];
-        if ([_delegate respondsToSelector:@selector(tagWriteView:didMakeTag:)])
-        {
-            [_delegate tagWriteView:self didMakeTag:textField.text];
-        }
-        textField.text = @"";
-        return NO;
-    }
-    
-    CGFloat currentWidth = [self widthForInputViewWithText:textField.text];
-    CGFloat newWidth = 0;
-    NSString *newText = nil;
-    
-    if (string.length == 0 && range.length > 0)
-    {
-        // delete
-        newText = [textField.text substringWithRange:NSMakeRange(0, textField.text.length - range.length)];
-    }
-    else
-    {
-        if (textField.text.length + string.length > _maxTagLength)
-        {
-            return NO;
-        }
-        newText = [NSString stringWithFormat:@"%@%@", textField.text, string];
-    }
-    newWidth = [self widthForInputViewWithText:newText];
-    
-    CGRect inputRect = _inputView.frame;
-    inputRect.size.width = newWidth;
-    _inputView.frame = inputRect;
-
-    CGFloat widthDelta = newWidth - currentWidth;
-    CGSize contentSize = _scrollView.contentSize;
-    contentSize.width += widthDelta;
-    _scrollView.contentSize = contentSize;
-    
-    [self setScrollOffsetToShowInputView];
-    
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if (textField.text.length > 0)
-    {
-        [self addTagToLast:textField.text animated:YES];
-        textField.text = @"";
-    }
-    
-    [textField resignFirstResponder];
-    return NO;
-}
-
-- (void)textFieldDidDetectBackspace:(HKKTextField *)textField
-{
-    if (textField.text.length == 0)
+    if (_inputView.text.length == 0)
     {
         if (_readyToDelete)
         {
@@ -415,6 +376,81 @@
         {
             _readyToDelete = YES;
         }
+    }
+}
+
+#pragma mark - UI Actions
+- (void)tagButtonDidPushed:(id)sender
+{
+    UIButton *btn = sender;
+    NSLog(@"tagButton pushed: %@, idx = %ld", btn.titleLabel.text, (long)btn.tag);
+}
+
+#pragma mark - UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@" "] || [text isEqualToString:@"\n"])
+    {
+        [self addTagToLast:textView.text animated:YES];
+        if ([_delegate respondsToSelector:@selector(tagWriteView:didMakeTag:)])
+        {
+            [_delegate tagWriteView:self didMakeTag:textView.text];
+        }
+        textView.text = @"";
+        
+        if ([text isEqualToString:@"\n"])
+        {
+            [textView resignFirstResponder];
+        }
+        return NO;
+    }
+    
+    CGFloat currentWidth = [self widthForInputViewWithText:textView.text];
+    CGFloat newWidth = 0;
+    NSString *newText = nil;
+    
+    if (text.length == 0)
+    {
+        // delete
+        if (textView.text.length)
+        {
+            newText = [textView.text substringWithRange:NSMakeRange(0, textView.text.length - range.length)];
+        }
+        else
+        {
+            [self detectBackspace];
+            return NO;
+        }
+    }
+    else
+    {
+        if (textView.text.length + text.length > _maxTagLength)
+        {
+            return NO;
+        }
+        newText = [NSString stringWithFormat:@"%@%@", textView.text, text];
+    }
+    newWidth = [self widthForInputViewWithText:newText];
+    
+    CGRect inputRect = _inputView.frame;
+    inputRect.size.width = newWidth;
+    _inputView.frame = inputRect;
+
+    CGFloat widthDelta = newWidth - currentWidth;
+    CGSize contentSize = _scrollView.contentSize;
+    contentSize.width += widthDelta;
+    _scrollView.contentSize = contentSize;
+    
+    [self setScrollOffsetToShowInputView];
+    
+    return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([_delegate respondsToSelector:@selector(tagWriteView:didChangeText:)])
+    {
+        [_delegate tagWriteView:self didChangeText:textView.text];
     }
 }
 

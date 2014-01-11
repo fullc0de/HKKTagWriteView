@@ -26,7 +26,15 @@
 //
 @property (nonatomic, readonly) NSArray *tags;
 
+//
+// control
+//
+@property (nonatomic, assign) BOOL focusOnAddTag;
+
 @property (nonatomic, weak) id<HKKTagWriteViewDelegate> delegate;
+
+- (void)clear;
+- (void)setTextToInputSlot:(NSString *)text;
 
 - (void)addTags:(NSArray *)tags;
 - (void)removeTags:(NSArray *)tags;
@@ -37,6 +45,7 @@
 
 @protocol HKKTagWriteViewDelegate <NSObject>
 @optional
+- (void)tagWriteView:(HKKTagWriteView *)view didChangeText:(NSString *)text;
 - (void)tagWriteView:(HKKTagWriteView *)view didMakeTag:(NSString *)tag;
 - (void)tagWriteView:(HKKTagWriteView *)view didRemoveTag:(NSString *)tag;
 @end
