@@ -33,35 +33,51 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self initControls];
         [self initProperties];
+        [self initControls];
+        
+        [self reArrangeSubViews];
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    [self initControls];
     [self initProperties];
+    [self initControls];
+    
+    [self reArrangeSubViews];
 }
 
 #pragma mark - Property Get / Set
 - (void)setFont:(UIFont *)font
 {
     _font = font;
-    [self reArrangeSubViews];
+    for (UIButton *btn in _tagViews)
+    {
+        [btn.titleLabel setFont:_font];
+    }
 }
 
 - (void)setTagBackgroundColor:(UIColor *)tagBackgroundColor
 {
     _tagBackgroundColor = tagBackgroundColor;
-    [self reArrangeSubViews];
+    for (UIButton *btn in _tagViews)
+    {
+        [btn setBackgroundColor:_tagBackgroundColor];
+    }
+    
+    _inputView.layer.borderColor = _tagBackgroundColor.CGColor;
+    _inputView.textColor = _tagBackgroundColor;
 }
 
 - (void)setTagForegroundColor:(UIColor *)tagForegroundColor
 {
     _tagForegroundColor = tagForegroundColor;
-    [self reArrangeSubViews];
+    for (UIButton *btn in _tagViews)
+    {
+        [btn setTitleColor:_tagForegroundColor forState:UIControlStateNormal];
+    }
 }
 
 - (void)setMaxTagLength:(int)maxTagLength
@@ -140,6 +156,8 @@
     
     [_tagsMade addObject:tag];
     
+    _inputView.text = @"";
+    
     [self addTagViewToLast:tag animated:animated];
     [self layoutInputAndScroll];
 }
@@ -177,14 +195,16 @@
     _scrollView.backgroundColor = [UIColor clearColor];
     _scrollView.scrollsToTop = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:_scrollView];
 
-    _inputView = [[UITextView alloc] init];
+    _inputView = [[UITextView alloc] initWithFrame:CGRectInset(self.bounds, 0, _tagGap)];
     _inputView.autocorrectionType = UITextAutocorrectionTypeNo;
     _inputView.delegate = self;
     _inputView.returnKeyType = UIReturnKeyDone;
-    _inputView.contentInset = UIEdgeInsetsMake(-5, 0, 0, 0);
+    _inputView.contentInset = UIEdgeInsetsMake(-6, 0, 0, 0);
     _inputView.scrollsToTop = NO;
+    _inputView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [_scrollView addSubview:_inputView];
 }
 
@@ -194,7 +214,7 @@
     _tagBackgroundColor = [UIColor blackColor];
     _tagForegroundColor = [UIColor whiteColor];
     _maxTagLength = 20;
-    _tagGap = 3.0f;
+    _tagGap = 4.0f;
     
     _tagsMade = [NSMutableArray array];
     _tagViews = [NSMutableArray array];
@@ -286,15 +306,16 @@
 
     CGRect inputRect = _inputView.frame;
     inputRect.origin.x = accumX;
-    inputRect.origin.y = _tagGap;
+    inputRect.origin.y = _tagGap + 1.0f;
     inputRect.size.width = [self widthForInputViewWithText:_inputView.text];
-    inputRect.size.height = self.frame.size.height - 6.0f;
+    inputRect.size.height = self.frame.size.height - 10.0f;
     _inputView.frame = inputRect;
     _inputView.font = _font;
-    _inputView.layer.borderColor = [UIColor blackColor].CGColor;
+    _inputView.layer.borderColor = _tagBackgroundColor.CGColor;
     _inputView.layer.borderWidth = 1.0f;
-    _inputView.layer.cornerRadius = _inputView.frame.size.height * 0.42f;
+    _inputView.layer.cornerRadius = _inputView.frame.size.height * 0.5f;
     _inputView.backgroundColor = [UIColor clearColor];
+    _inputView.textColor = _tagBackgroundColor;
 
     CGSize contentSize = _scrollView.contentSize;
     contentSize.width = accumX + inputRect.size.width + 20.0f;
@@ -306,18 +327,20 @@
 - (void)setScrollOffsetToShowInputView
 {
     CGRect inputRect = _inputView.frame;
+    NSLog(@"input  x = %f,  width = %f", inputRect.origin.x, inputRect.size.width);
+    NSLog(@"scroll  contentoff = %f,  width = %f", _scrollView.contentOffset.x, _scrollView.frame.size.width);
     CGFloat scrollingDelta = (inputRect.origin.x + inputRect.size.width) - (_scrollView.contentOffset.x + _scrollView.frame.size.width);
     if (scrollingDelta > 0)
     {
         CGPoint scrollOffset = _scrollView.contentOffset;
-        scrollOffset.x += scrollingDelta;
+        scrollOffset.x += scrollingDelta + 40.0f;
         _scrollView.contentOffset = scrollOffset;
     }
 }
 
 - (CGFloat)widthForInputViewWithText:(NSString *)text
 {
-    return MAX(60.0, [text sizeWithAttributes:@{NSFontAttributeName:_font}].width + 30);
+    return MAX(50.0, [text sizeWithAttributes:@{NSFontAttributeName:_font}].width + 25.0f);
 }
 
 - (CGFloat)posXForObjectNextToLastTagView
@@ -339,14 +362,13 @@
     [tagBtn setTitleColor:_tagForegroundColor forState:UIControlStateNormal];
     [tagBtn addTarget:self action:@selector(tagButtonDidPushed:) forControlEvents:UIControlEventTouchUpInside];
     [tagBtn setTitle:tag forState:UIControlStateNormal];
-    [tagBtn sizeToFit];
-    tagBtn.layer.cornerRadius = tagBtn.frame.size.height * 0.42f;
     
     CGRect btnFrame = tagBtn.frame;
     btnFrame.origin.x = posX;
-    btnFrame.origin.y = _tagGap;
-    btnFrame.size.width = [tagBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_font}].width + (tagBtn.layer.cornerRadius * 2.0f);
-    btnFrame.size.height = self.frame.size.height - 6.0f;
+    btnFrame.origin.y = _tagGap + 1.0f;
+    btnFrame.size.width = [tagBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_font}].width + (tagBtn.layer.cornerRadius * 2.0f) + 20.0f;
+    btnFrame.size.height = self.frame.size.height - 10.0f;
+    tagBtn.layer.cornerRadius = btnFrame.size.height * 0.5f;
     tagBtn.frame = CGRectIntegral(btnFrame);
     
     NSLog(@"btn frame [%@] = %@", tag, NSStringFromCGRect(tagBtn.frame));
@@ -391,17 +413,21 @@
 {
     if ([text isEqualToString:@" "] || [text isEqualToString:@"\n"])
     {
-        [self addTagToLast:textView.text animated:YES];
-        if ([_delegate respondsToSelector:@selector(tagWriteView:didMakeTag:)])
+        if (textView.text.length > 0)
         {
-            [_delegate tagWriteView:self didMakeTag:textView.text];
+            [self addTagToLast:textView.text animated:YES];
+            if ([_delegate respondsToSelector:@selector(tagWriteView:didMakeTag:)])
+            {
+                [_delegate tagWriteView:self didMakeTag:textView.text];
+            }
+            textView.text = @"";
         }
-        textView.text = @"";
-        
+
         if ([text isEqualToString:@"\n"])
         {
             [textView resignFirstResponder];
         }
+
         return NO;
     }
     
@@ -454,6 +480,21 @@
     }
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([_delegate respondsToSelector:@selector(tagWriteViewDidBeginEditing:)])
+    {
+        [_delegate tagWriteViewDidBeginEditing:self];
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([_delegate respondsToSelector:@selector(tagWriteViewDidEndEditing:)])
+    {
+        [_delegate tagWriteViewDidEndEditing:self];
+    }
+}
 @end
 
 

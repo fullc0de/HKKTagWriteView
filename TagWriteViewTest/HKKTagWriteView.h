@@ -45,7 +45,12 @@
 
 @protocol HKKTagWriteViewDelegate <NSObject>
 @optional
+- (void)tagWriteViewDidBeginEditing:(HKKTagWriteView *)view;
+- (void)tagWriteViewDidEndEditing:(HKKTagWriteView *)view;
+
 - (void)tagWriteView:(HKKTagWriteView *)view didChangeText:(NSString *)text;
 - (void)tagWriteView:(HKKTagWriteView *)view didMakeTag:(NSString *)tag;
 - (void)tagWriteView:(HKKTagWriteView *)view didRemoveTag:(NSString *)tag;
 @end
+
+
