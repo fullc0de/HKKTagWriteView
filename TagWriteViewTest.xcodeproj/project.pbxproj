@@ -22,6 +22,7 @@
 		DA3735921880DAF300241916 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA3735901880DAF300241916 /* InfoPlist.strings */; };
 		DA3735941880DAF300241916 /* TagWriteViewTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3735931880DAF300241916 /* TagWriteViewTestTests.m */; };
 		DA37359F1880DB1200241916 /* HKKTagWriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA37359E1880DB1200241916 /* HKKTagWriteView.m */; };
+		DAB220641882C67600E32311 /* btn_tag_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = DAB220631882C67600E32311 /* btn_tag_delete.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		DA3735931880DAF300241916 /* TagWriteViewTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagWriteViewTestTests.m; sourceTree = "<group>"; };
 		DA37359D1880DB1200241916 /* HKKTagWriteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKKTagWriteView.h; sourceTree = "<group>"; };
 		DA37359E1880DB1200241916 /* HKKTagWriteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKKTagWriteView.m; sourceTree = "<group>"; };
+		DAB220631882C67600E32311 /* btn_tag_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_tag_delete.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 		DA37356E1880DAF300241916 /* TagWriteViewTest */ = {
 			isa = PBXGroup;
 			children = (
+				DAB220631882C67600E32311 /* btn_tag_delete.png */,
 				DA3735771880DAF300241916 /* HKKAppDelegate.h */,
 				DA3735781880DAF300241916 /* HKKAppDelegate.m */,
 				DA37357A1880DAF300241916 /* Main.storyboard */,
@@ -236,6 +239,7 @@
 			files = (
 				DA3735811880DAF300241916 /* Images.xcassets in Resources */,
 				DA3735731880DAF300241916 /* InfoPlist.strings in Resources */,
+				DAB220641882C67600E32311 /* btn_tag_delete.png in Resources */,
 				DA37357C1880DAF300241916 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

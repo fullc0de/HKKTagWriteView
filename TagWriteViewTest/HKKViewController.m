@@ -26,7 +26,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     _tagWriteView.delegate = self;
-    [_tagWriteView setBackgroundColor:[UIColor clearColor]];
+    [_tagWriteView setBackgroundColor:[UIColor yellowColor]];
     [_tagWriteView addTags:@[@"hello", @"UX", @"congratulation", @"google", @"ios", @"android"]];
 }
 

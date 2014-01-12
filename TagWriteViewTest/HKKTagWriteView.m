@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *tagViews;
 @property (nonatomic, strong) UITextView *inputView;
+@property (nonatomic, strong) UIButton *deleteButton;
 
 @property (nonatomic, strong) NSMutableArray *tagsMade;
 
@@ -160,6 +161,11 @@
     
     [self addTagViewToLast:tag animated:animated];
     [self layoutInputAndScroll];
+    
+    if ([_delegate respondsToSelector:@selector(tagWriteView:didMakeTag:)])
+    {
+        [_delegate tagWriteView:self didMakeTag:tag];
+    }
 }
 
 - (void)removeTag:(NSString *)tag animated:(BOOL)animated
@@ -186,6 +192,10 @@
         [self layoutInputAndScroll];
     }];
     
+    if ([_delegate respondsToSelector:@selector(tagWriteView:didRemoveTag:)])
+    {
+        [_delegate tagWriteView:self didRemoveTag:tag];
+    }
 }
 
 #pragma mark - Internals
@@ -204,14 +214,19 @@
     _inputView.returnKeyType = UIReturnKeyDone;
     _inputView.contentInset = UIEdgeInsetsMake(-6, 0, 0, 0);
     _inputView.scrollsToTop = NO;
-    _inputView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    _inputView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
     [_scrollView addSubview:_inputView];
+    
+    _deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 0, 17, 17)];
+    [_deleteButton setBackgroundImage:[UIImage imageNamed:@"btn_tag_delete"] forState:UIControlStateNormal];
+    [_deleteButton addTarget:self action:@selector(deleteTagDidPush:) forControlEvents:UIControlEventTouchUpInside];
+    _deleteButton.hidden = YES;
 }
 
 - (void)initProperties
 {
     _font = [UIFont systemFontOfSize:14.0f];
-    _tagBackgroundColor = [UIColor blackColor];
+    _tagBackgroundColor = [UIColor darkGrayColor];
     _tagForegroundColor = [UIColor whiteColor];
     _maxTagLength = 20;
     _tagGap = 4.0f;
@@ -262,6 +277,8 @@
             view.frame = viewFrame;
             
             posX += viewFrame.size.width + _tagGap;
+            
+            view.tag = idx;
         }
     };
     
@@ -306,9 +323,9 @@
 
     CGRect inputRect = _inputView.frame;
     inputRect.origin.x = accumX;
-    inputRect.origin.y = _tagGap + 1.0f;
+    inputRect.origin.y = _tagGap + 6.0f;
     inputRect.size.width = [self widthForInputViewWithText:_inputView.text];
-    inputRect.size.height = self.frame.size.height - 10.0f;
+    inputRect.size.height = self.frame.size.height - 13.0f;
     _inputView.frame = inputRect;
     _inputView.font = _font;
     _inputView.layer.borderColor = _tagBackgroundColor.CGColor;
@@ -327,8 +344,6 @@
 - (void)setScrollOffsetToShowInputView
 {
     CGRect inputRect = _inputView.frame;
-    NSLog(@"input  x = %f,  width = %f", inputRect.origin.x, inputRect.size.width);
-    NSLog(@"scroll  contentoff = %f,  width = %f", _scrollView.contentOffset.x, _scrollView.frame.size.width);
     CGFloat scrollingDelta = (inputRect.origin.x + inputRect.size.width) - (_scrollView.contentOffset.x + _scrollView.frame.size.width);
     if (scrollingDelta > 0)
     {
@@ -365,9 +380,9 @@
     
     CGRect btnFrame = tagBtn.frame;
     btnFrame.origin.x = posX;
-    btnFrame.origin.y = _tagGap + 1.0f;
+    btnFrame.origin.y = _tagGap + 6.0f;
     btnFrame.size.width = [tagBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_font}].width + (tagBtn.layer.cornerRadius * 2.0f) + 20.0f;
-    btnFrame.size.height = self.frame.size.height - 10.0f;
+    btnFrame.size.height = self.frame.size.height - 13.0f;
     tagBtn.layer.cornerRadius = btnFrame.size.height * 0.5f;
     tagBtn.frame = CGRectIntegral(btnFrame);
     
@@ -387,10 +402,6 @@
             {
                 NSString *deletedTag = _tagsMade.lastObject;
                 [self removeTag:deletedTag animated:YES];
-                if ([_delegate respondsToSelector:@selector(tagWriteView:didRemoveTag:)])
-                {
-                    [_delegate tagWriteView:self didRemoveTag:deletedTag];
-                }
                 _readyToDelete = NO;
             }
         }
@@ -406,6 +417,44 @@
 {
     UIButton *btn = sender;
     NSLog(@"tagButton pushed: %@, idx = %ld", btn.titleLabel.text, (long)btn.tag);
+    
+    if (_deleteButton.hidden == NO && btn.tag == _deleteButton.tag)
+    {
+        // hide delete button
+        _deleteButton.hidden = YES;
+        [_deleteButton removeFromSuperview];
+    }
+    else
+    {
+        // show delete button
+        CGRect newRect = _deleteButton.frame;
+        newRect.origin.x = btn.frame.origin.x + btn.frame.size.width - (newRect.size.width * 0.7f);
+        newRect.origin.y = _inputView.frame.origin.y - 8.0f;
+        _deleteButton.frame = newRect;
+        _deleteButton.tag = btn.tag;
+        
+        if (_deleteButton.superview == nil)
+        {
+            [_scrollView addSubview:_deleteButton];
+        }
+        _deleteButton.hidden = NO;
+    }
+}
+
+- (void)deleteTagDidPush:(id)sender
+{
+    NSLog(@"tag count = %d,  button tag = %d", _tagsMade.count, _deleteButton.tag);
+    NSAssert(_tagsMade.count > _deleteButton.tag, @"out of range");
+    if (_tagsMade.count <= _deleteButton.tag)
+    {
+        return;
+    }
+    
+    _deleteButton.hidden = YES;
+    [_deleteButton removeFromSuperview];
+    
+    NSString *tag = [_tagsMade objectAtIndex:_deleteButton.tag];
+    [self removeTag:tag animated:YES];
 }
 
 #pragma mark - UITextViewDelegate
@@ -416,10 +465,6 @@
         if (textView.text.length > 0)
         {
             [self addTagToLast:textView.text animated:YES];
-            if ([_delegate respondsToSelector:@selector(tagWriteView:didMakeTag:)])
-            {
-                [_delegate tagWriteView:self didMakeTag:textView.text];
-            }
             textView.text = @"";
         }
 
@@ -477,6 +522,11 @@
     if ([_delegate respondsToSelector:@selector(tagWriteView:didChangeText:)])
     {
         [_delegate tagWriteView:self didChangeText:textView.text];
+    }
+    
+    if (_deleteButton.hidden == NO)
+    {
+        _deleteButton.hidden = YES;
     }
 }
 
