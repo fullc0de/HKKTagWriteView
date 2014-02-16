@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *tagsMade;
 
 @property (nonatomic, assign) BOOL readyToDelete;
+@property (nonatomic, assign) BOOL readyToFinishMaking;
 
 @end
 
@@ -146,6 +147,8 @@
 
 - (void)addTagToLast:(NSString *)tag animated:(BOOL)animated
 {
+    tag = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
     for (NSString *t in _tagsMade)
     {
         if ([tag isEqualToString:t])
@@ -412,6 +415,34 @@
     }
 }
 
+- (BOOL)isFinishLetter:(NSString *)letter
+{
+    if ([letter isEqualToString:@"\n"])
+    {
+        return YES;
+    }
+    
+    if ([letter isEqualToString:@" "])
+    {
+        if (_allowToUseSingleSpace && _readyToFinishMaking == NO)
+        {
+            _readyToFinishMaking = YES;
+            return NO;
+        }
+        else
+        {
+            _readyToFinishMaking = NO;
+            return YES;
+        }
+    }
+    else
+    {
+        _readyToFinishMaking = NO;
+    }
+    
+    return NO;
+}
+
 #pragma mark - UI Actions
 - (void)tagButtonDidPushed:(id)sender
 {
@@ -443,7 +474,7 @@
 
 - (void)deleteTagDidPush:(id)sender
 {
-    NSLog(@"tag count = %d,  button tag = %d", _tagsMade.count, _deleteButton.tag);
+    NSLog(@"tag count = %lu,  button tag = %ld", (unsigned long)_tagsMade.count, (long)_deleteButton.tag);
     NSAssert(_tagsMade.count > _deleteButton.tag, @"out of range");
     if (_tagsMade.count <= _deleteButton.tag)
     {
@@ -460,7 +491,7 @@
 #pragma mark - UITextViewDelegate
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if ([text isEqualToString:@" "] || [text isEqualToString:@"\n"])
+    if ([self isFinishLetter:text])
     {
         if (textView.text.length > 0)
         {

@@ -30,6 +30,7 @@
 // control
 //
 @property (nonatomic, assign) BOOL focusOnAddTag;
+@property (nonatomic, assign) BOOL allowToUseSingleSpace;
 
 @property (nonatomic, weak) id<HKKTagWriteViewDelegate> delegate;
 
