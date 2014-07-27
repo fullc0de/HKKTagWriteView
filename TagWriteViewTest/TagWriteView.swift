@@ -10,6 +10,14 @@ import UIKit
 import Foundation
 import QuartzCore
 
+//
+// It's an extension to support subscription on Array.
+// It helps easily extract substring. Honestly, substringWithRange method of String is quite difficult to use for me.
+// Thus, I looked for an alternative way and finally found a way making an extension of String to support subscript.
+// The following link is where I referenced.
+//
+// http://stackoverflow.com/a/24046551/579236
+//
 extension String {
     subscript (r: Range<Int>) -> String {
         get {
