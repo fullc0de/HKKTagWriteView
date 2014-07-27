@@ -9,3 +9,8 @@ If you need to support multiple words with single space in a tag, use the follow
 
  - allowToUseSingleSpace
 
+
+Now available to support Swift. For more detail, check tagWriteView.swift file out.
+
+
+
