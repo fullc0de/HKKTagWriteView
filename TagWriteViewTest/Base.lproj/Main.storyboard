@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,25 +17,71 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Xb-rU-G2V" customClass="HKKTagWriteView">
-                                <rect key="frame" x="11" y="113" width="298" height="37"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Xb-rU-G2V" customClass="HKKTagWriteView">
+                                <rect key="frame" x="11" y="182" width="298" height="40"/>
+                                <color key="backgroundColor" red="0.96823030269999999" green="1" blue="0.79970299219999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Edj-kv-mhB"/>
+                                </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3r-dv-ahI" customClass="TagWriteView" customModule="TagWriteViewTest" customModuleProvider="target">
+                                <rect key="frame" x="11" y="264" width="298" height="40"/>
+                                <color key="backgroundColor" red="0.62957226889999995" green="0.93149657269999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="nrl-bl-ftZ"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Objective-C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJH-WS-MgX">
+                                <rect key="frame" x="11" y="157" width="298" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="yg3-wt-6EI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swift" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRg-bw-Ogg">
+                                <rect key="frame" x="11" y="239" width="298" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="sa3-Uk-IPS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="w3r-dv-ahI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="2GW-m2-47Y"/>
+                            <constraint firstAttribute="trailing" secondItem="bRg-bw-Ogg" secondAttribute="trailing" constant="11" id="3Xq-SI-dh9"/>
+                            <constraint firstItem="bRg-bw-Ogg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="3uj-gI-Dy2"/>
+                            <constraint firstAttribute="trailing" secondItem="IJH-WS-MgX" secondAttribute="trailing" constant="11" id="Efa-2k-Due"/>
+                            <constraint firstAttribute="trailing" secondItem="w3r-dv-ahI" secondAttribute="trailing" constant="11" id="QDM-hY-5QY"/>
+                            <constraint firstItem="3Xb-rU-G2V" firstAttribute="top" secondItem="IJH-WS-MgX" secondAttribute="bottom" constant="4" id="RJ2-Ka-RNW"/>
+                            <constraint firstItem="w3r-dv-ahI" firstAttribute="top" secondItem="3Xb-rU-G2V" secondAttribute="bottom" constant="42" id="RrT-Sb-d52"/>
+                            <constraint firstAttribute="trailing" secondItem="3Xb-rU-G2V" secondAttribute="trailing" constant="11" id="S2l-FK-tGs"/>
+                            <constraint firstItem="w3r-dv-ahI" firstAttribute="top" secondItem="bRg-bw-Ogg" secondAttribute="bottom" constant="4" id="VdX-Ck-0pF"/>
+                            <constraint firstItem="3Xb-rU-G2V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="bWw-7C-cYi"/>
+                            <constraint firstItem="IJH-WS-MgX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="eMa-0E-Shd"/>
+                            <constraint firstItem="3Xb-rU-G2V" firstAttribute="top" secondItem="VIk-gI-FOx" secondAttribute="bottom" constant="162" id="qAc-VS-bgQ"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="swiftTagView" destination="w3r-dv-ahI" id="DDG-ic-S9j"/>
                         <outlet property="tagWriteView" destination="3Xb-rU-G2V" id="MBc-f9-lKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-1" y="125"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
 </document>

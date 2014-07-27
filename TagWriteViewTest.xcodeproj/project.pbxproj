@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A5366441984CBF000AD39DC /* TagWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5366431984CBF000AD39DC /* TagWriteView.swift */; };
 		DA3735691880DAF300241916 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3735681880DAF300241916 /* Foundation.framework */; };
 		DA37356B1880DAF300241916 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37356A1880DAF300241916 /* CoreGraphics.framework */; };
 		DA37356D1880DAF300241916 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37356C1880DAF300241916 /* UIKit.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A03088219838C8300418FC1 /* TagWriteViewTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TagWriteViewTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		4A5366431984CBF000AD39DC /* TagWriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWriteView.swift; sourceTree = "<group>"; };
 		DA3735651880DAF300241916 /* TagWriteViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TagWriteViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3735681880DAF300241916 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DA37356A1880DAF300241916 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -84,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A32ED911984CB6000448C78 /* swift */ = {
+			isa = PBXGroup;
+			children = (
+				4A5366431984CBF000AD39DC /* TagWriteView.swift */,
+			);
+			name = swift;
+			sourceTree = "<group>";
+		};
 		DA37355C1880DAF300241916 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +128,7 @@
 		DA37356E1880DAF300241916 /* TagWriteViewTest */ = {
 			isa = PBXGroup;
 			children = (
+				4A32ED911984CB6000448C78 /* swift */,
 				DAB220631882C67600E32311 /* btn_tag_delete.png */,
 				DA3735771880DAF300241916 /* HKKAppDelegate.h */,
 				DA3735781880DAF300241916 /* HKKAppDelegate.m */,
@@ -127,6 +139,7 @@
 				DA37356F1880DAF300241916 /* Supporting Files */,
 				DA37359D1880DB1200241916 /* HKKTagWriteView.h */,
 				DA37359E1880DB1200241916 /* HKKTagWriteView.m */,
+				4A03088219838C8300418FC1 /* TagWriteViewTest-Bridging-Header.h */,
 			);
 			path = TagWriteViewTest;
 			sourceTree = "<group>";
@@ -260,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA37359F1880DB1200241916 /* HKKTagWriteView.m in Sources */,
+				4A5366441984CBF000AD39DC /* TagWriteView.swift in Sources */,
 				DA37357F1880DAF300241916 /* HKKViewController.m in Sources */,
 				DA3735751880DAF300241916 /* main.m in Sources */,
 				DA3735791880DAF300241916 /* HKKAppDelegate.m in Sources */,
@@ -389,10 +403,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TagWriteViewTest/TagWriteViewTest-Prefix.pch";
 				INFOPLIST_FILE = "TagWriteViewTest/TagWriteViewTest-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TagWriteViewTest/TagWriteViewTest-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -402,10 +420,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TagWriteViewTest/TagWriteViewTest-Prefix.pch";
 				INFOPLIST_FILE = "TagWriteViewTest/TagWriteViewTest-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TagWriteViewTest/TagWriteViewTest-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
