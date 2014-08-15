@@ -8,7 +8,9 @@
 
 #import "HKKViewController.h"
 #import "HKKTagWriteView.h"
+#if __clang__ && (__clang_major__ >= 6)
 #import "TagWriteViewTest-Swift.h"
+#endif
 
 
 @interface HKKViewController ()
@@ -17,7 +19,9 @@
 >
 
 @property (nonatomic, assign) IBOutlet HKKTagWriteView *tagWriteView;
+#if __clang__ && (__clang_major__ >= 6)
 @property (nonatomic, weak) IBOutlet TagWriteView *swiftTagView;
+#endif
 @end
 
 @implementation HKKViewController
@@ -32,9 +36,11 @@
     [_tagWriteView setBackgroundColor:[UIColor yellowColor]];
     [_tagWriteView addTags:@[@"hello", @"UX", @"congratulation", @"google", @"ios", @"android"]];
     
+#if __clang__ && (__clang_major__ >= 6)
     _swiftTagView.allowToUseSingleSpace = YES;
     [_swiftTagView setBackgroundColor:[UIColor greenColor]];
     [_swiftTagView addTags:@[@"sw_hello", @"sw_UX", @"sw_congratulation"]];
+#endif
 }
 
 - (void)didReceiveMemoryWarning
