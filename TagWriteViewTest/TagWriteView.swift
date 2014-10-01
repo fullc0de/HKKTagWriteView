@@ -37,7 +37,7 @@ public class TagWriteView : UIView
     public var font: UIFont = UIFont.systemFontOfSize(14.0) {
     didSet {
         for btn in tagViews {
-            btn.titleLabel.font = font
+            btn.titleLabel?.font = font
         }
     }
     }
@@ -94,11 +94,11 @@ public class TagWriteView : UIView
     
     
     // MARK: Initializers
-    init(coder aDecoder: NSCoder!) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         initControls()
         rearrangeSubViews()
@@ -125,7 +125,7 @@ public class TagWriteView : UIView
         for tag in tags {
             let result = tagsMade.filter({$0 == tag})
             if result.count == 0 {
-                tagsMade += tag
+                tagsMade.append(tag)
             }
         }
         
@@ -137,7 +137,7 @@ public class TagWriteView : UIView
         for tag in tags {
             for (idx, value) in enumerate(tagsMade) {
                 if value == tag {
-                    pickedIndexes += idx
+                    pickedIndexes.append(idx)
                 }
             }
         }
@@ -158,7 +158,7 @@ public class TagWriteView : UIView
             }
         }
         
-        tagsMade += newTag
+        tagsMade.append(newTag)
         
         tagInputView.text = ""
         addTagViewToLast(newTag, animated: animated)
@@ -265,7 +265,7 @@ public class TagWriteView : UIView
         newTagButtons.reserveCapacity(tagsMade.count)
         for (index, tag) in enumerate(tagsMade) {
             let tagButton = self.tagButton(tagName: tag, positionX: accumX)
-            newTagButtons += tagButton
+            newTagButtons.append(tagButton)
             tagButton.tag = index
             accumX += tagButton.frame.size.width + tagGap
             scrollView.addSubview(tagButton)
@@ -282,7 +282,7 @@ public class TagWriteView : UIView
     
     private func tagButton(tagName tag: String, positionX posx: CGFloat) -> UIButton! {
         let tagButton = UIButton()
-        tagButton.titleLabel.font = font
+        tagButton.titleLabel?.font = font
         tagButton.backgroundColor = tagBackgroundColor
         tagButton.setTitleColor(tagForegroundColor, forState: UIControlState.Normal)
         tagButton.setTitle(tag, forState: UIControlState.Normal)
