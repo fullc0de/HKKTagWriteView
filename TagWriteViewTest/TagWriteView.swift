@@ -181,7 +181,7 @@ public class TagWriteView : UIView
         }
         
         tagsMade.removeAtIndex(foundIndex)
-        removeTagView(foundIndex, animated: animated, { (finished: Bool) -> Void in
+        removeTagView(foundIndex, animated: animated, completion: { (finished: Bool) -> Void in
             self.layoutInputAndScroll()
         })
         
@@ -191,7 +191,7 @@ public class TagWriteView : UIView
     
     // MARK: UI Actions
     func tagButtonDidPushed(sender: AnyObject!) {
-        let btn = sender as UIButton
+        let btn = sender as! UIButton
 
         if deleteButton.hidden == false && btn.tag == deleteButton.tag {
             deleteButton.hidden = true
@@ -306,7 +306,7 @@ public class TagWriteView : UIView
 
     private func deleteBackspace() {
         let text: String = tagInputView.text
-        if countElements(text) == 0 {
+        if count(text) == 0 {
             if readyToDelete {
                 if tagsMade.count > 0 {
                     let deletedTag = tagsMade[tagsMade.endIndex - 1]
@@ -415,12 +415,12 @@ public class TagWriteView : UIView
     }
     
     // MARK: UITextViewDelegate
-    public func textView(textView: UITextView!, shouldChangeTextInRange range: NSRange, replacementText text: String!) -> Bool {
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let piece: String = text
         let t: String = textView.text
         
-        let pieceCount = countElements(piece)
-        let textCount = countElements(t)
+        let pieceCount = count(piece)
+        let textCount = count(t)
         
         if isFinishLetter(piece) {
             if textCount > 0 {
@@ -467,15 +467,15 @@ public class TagWriteView : UIView
         return true
     }
     
-    public func textViewDidChange(textView: UITextView!) {
+    public func textViewDidChange(textView: UITextView) {
         delegate?.tagWriteView?(self, didChangeText: textView.text)
     }
     
-    public func textViewDidBeginEditing(textView: UITextView!) {
+    public func textViewDidBeginEditing(textView: UITextView) {
         delegate?.tagWriteViewDidBeginEditing?(self)
     }
     
-    public func textViewDidEndEditing(textView: UITextView!) {
+    public func textViewDidEndEditing(textView: UITextView) {
         delegate?.tagWriteViewDidEndEditing?(self)
     }
 }
