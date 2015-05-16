@@ -15,7 +15,7 @@ public class TagWriteView : UIView
 {
     
     // MARK: Public Properties
-    var font: UIFont = UIFont.systemFontOfSize(14.0) {
+    public var font: UIFont = UIFont.systemFontOfSize(14.0) {
     didSet {
         for btn in tagViews {
             btn.titleLabel?.font = font
@@ -23,7 +23,7 @@ public class TagWriteView : UIView
     }
     }
     
-    var tagBackgroundColor: UIColor = UIColor.darkGrayColor() {
+    public var tagBackgroundColor: UIColor = UIColor.darkGrayColor() {
     didSet {
         for btn in tagViews {
             btn.backgroundColor = tagBackgroundColor
@@ -33,7 +33,7 @@ public class TagWriteView : UIView
     }
     }
     
-    var tagForegroundColor: UIColor = UIColor.whiteColor() {
+    public var tagForegroundColor: UIColor = UIColor.whiteColor() {
     didSet {
         for btn in tagViews {
             btn.setTitleColor(tagForegroundColor, forState: UIControlState.Normal)
@@ -41,13 +41,13 @@ public class TagWriteView : UIView
     }
     }
     
-    var sizeForDeleteButton = CGRectMake(0, 0, 17, 17) {
+    public var sizeForDeleteButton = CGRectMake(0, 0, 17, 17) {
         didSet {
             deleteButton.frame = sizeForDeleteButton
         }
     }
     
-    var backgroundColorForDeleteButton = UIColor.whiteColor() {
+    public var backgroundColorForDeleteButton = UIColor.whiteColor() {
         didSet {
             if deleteButton != nil {
                 deleteButton.backgroundColor = backgroundColorForDeleteButton
@@ -56,16 +56,16 @@ public class TagWriteView : UIView
     }
     
     
-    var tags: [String] {
+    public var tags: [String] {
         return tagsMade
     }
     
-    var maxTagLength = 20   // maximum length of a tag
-    var tagGap: CGFloat = 4.0   // a gap between tags
-    var allowToUseSingleSpace = false   // if true, space character is allowed to use
-    var verticalInsetForTag = UIEdgeInsetsZero  // 'top' and 'bottom' properties are only available. set vertical margin to each tags.
+    public var maxTagLength = 20   // maximum length of a tag
+    public var tagGap: CGFloat = 4.0   // a gap between tags
+    public var allowToUseSingleSpace = false   // if true, space character is allowed to use
+    public var verticalInsetForTag = UIEdgeInsetsZero  // 'top' and 'bottom' properties are only available. set vertical margin to each tags.
     
-    var focusOnAddTag: Bool = false {
+    public var focusOnAddTag: Bool = false {
     didSet {
         if focusOnAddTag {
             tagInputView.becomeFirstResponder()
@@ -75,7 +75,7 @@ public class TagWriteView : UIView
     }
     }
     
-    var delegate: TagWriteViewDelegate?
+    public var delegate: TagWriteViewDelegate?
     
     
     // MARK: Private Properties
@@ -123,17 +123,17 @@ public class TagWriteView : UIView
     }
     
     // MARK: Interfaces
-    func clear() {
+    public func clear() {
         tagInputView.text = ""
         tagsMade.removeAll(keepCapacity: false)
         rearrangeSubViews()
     }
     
-    func setTextToInputSlot(text: String) {
+    public func setTextToInputSlot(text: String) {
         tagInputView.text = text
     }
     
-    func addTags(tags: [String]) {
+    public func addTags(tags: [String]) {
         for tag in tags {
             let result = tagsMade.filter({$0 == tag})
             if result.count == 0 {
@@ -144,7 +144,7 @@ public class TagWriteView : UIView
         rearrangeSubViews()
     }
     
-    func removeTags(tags: [String]) {
+    public func removeTags(tags: [String]) {
         var pickedIndexes = [Int]()
         for tag in tags {
             for (idx, value) in enumerate(tagsMade) {
@@ -161,7 +161,7 @@ public class TagWriteView : UIView
         rearrangeSubViews()
     }
     
-    func addTagToLast(tag: String, animated: Bool) {
+    public func addTagToLast(tag: String, animated: Bool) {
         var newTag = tag.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         for t in tagsMade {
             if newTag == t {
@@ -178,7 +178,7 @@ public class TagWriteView : UIView
         delegate?.tagWriteView?(self, didChangeText: newTag)
     }
 
-    func removeTag(tag: String, animated: Bool) {
+    public func removeTag(tag: String, animated: Bool) {
         var foundIndex = -1
         for (idx, value) in enumerate(tagsMade) {
             if tag == value {
@@ -199,7 +199,7 @@ public class TagWriteView : UIView
         delegate?.tagWriteView?(self, didRemoveTag: tag)
     }
 
-    func setDeleteButtonBackgroundImage(image: UIImage?, state: UIControlState) {
+    public func setDeleteButtonBackgroundImage(image: UIImage?, state: UIControlState) {
         deleteButton.setBackgroundImage(image, forState: state)
     }
     
@@ -504,7 +504,7 @@ extension TagWriteView: UITextViewDelegate {
     }
 }
 
-@objc protocol TagWriteViewDelegate {
+@objc public protocol TagWriteViewDelegate {
     optional func tagWriteViewDidBeginEditing(view: TagWriteView!)
     optional func tagWriteViewDidEndEditing(view: TagWriteView!)
     
