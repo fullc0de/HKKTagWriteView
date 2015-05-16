@@ -38,7 +38,11 @@
     
 #if __clang__ && (__clang_major__ >= 6)
     _swiftTagView.allowToUseSingleSpace = YES;
+    _swiftTagView.verticalInsetForTag = UIEdgeInsetsMake(9, 0, 6, 0);
+    _swiftTagView.sizeForDeleteButton = CGRectMake(0, 0, 17, 17);
+    _swiftTagView.backgroundColorForDeleteButton = [UIColor clearColor];
     [_swiftTagView setBackgroundColor:[UIColor greenColor]];
+    [_swiftTagView setDeleteButtonBackgroundImage:[UIImage imageNamed:@"btn_tag_delete"] state:UIControlStateNormal];
     [_swiftTagView addTags:@[@"sw_hello", @"sw_UX", @"sw_congratulation"]];
 #endif
 }
