@@ -15,7 +15,9 @@ Now available for supporting Swift. For more detail, check tagWriteView.swift fi
 
 Installation
 ------------
-It is available to use CocoaPods for an installation.
+It is available to use CocoaPods for Swift version.
 ```
 pod "TagWriteView"
 ```
+
+I don't still prepare an podspec for Objective-C version. 
