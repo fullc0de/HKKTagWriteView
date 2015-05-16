@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import QuartzCore
 
-class TagWriteView : UIView
+public class TagWriteView : UIView
     , UITextViewDelegate
 {
     
@@ -92,7 +92,7 @@ class TagWriteView : UIView
     
     
     // MARK: Initializers
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -103,12 +103,12 @@ class TagWriteView : UIView
     }
     
     // MARK: Override
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         initControls()
         rearrangeSubViews()
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         for btn in tagViews {
             var newFrame = btn.frame
@@ -436,7 +436,10 @@ class TagWriteView : UIView
     }
     
     // MARK: UITextViewDelegate
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+}
+
+extension TagWriteView: UITextViewDelegate {
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let piece: String = text
         let t: String = textView.text
         
@@ -488,19 +491,18 @@ class TagWriteView : UIView
         return true
     }
     
-    func textViewDidChange(textView: UITextView) {
+    public func textViewDidChange(textView: UITextView) {
         delegate?.tagWriteView?(self, didChangeText: textView.text)
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    public func textViewDidBeginEditing(textView: UITextView) {
         delegate?.tagWriteViewDidBeginEditing?(self)
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    public func textViewDidEndEditing(textView: UITextView) {
         delegate?.tagWriteViewDidEndEditing?(self)
     }
 }
-
 
 @objc protocol TagWriteViewDelegate {
     optional func tagWriteViewDidBeginEditing(view: TagWriteView!)
