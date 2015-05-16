@@ -13,4 +13,8 @@ If you need to support multiple words with single space in a tag, use the follow
 Now available for supporting Swift. For more detail, check tagWriteView.swift file out.
 
 
+Installation
+------------
+It's available to use CocoaPods.
+pod "TagWriteView"
 
