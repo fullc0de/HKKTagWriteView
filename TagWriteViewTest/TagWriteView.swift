@@ -246,7 +246,7 @@ public class TagWriteView : UIView
         scrollView.applyMarginConstraint(margin: UIEdgeInsetsZero)
         
         inputBaseView = UIView()
-        inputBaseView.backgroundColor = UIColor.greenColor()
+        inputBaseView.backgroundColor = UIColor.clearColor()
         scrollView.addSubview(inputBaseView)
         
         tagInputView = UITextView(frame: inputBaseView.bounds)
