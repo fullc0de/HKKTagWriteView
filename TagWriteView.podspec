@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "TagWriteView"
-  s.version          = "1.1.3"
+  s.version          = "1.1.4"
   s.summary          = "The smart input custom view for Evernote app style tagging."
   s.homepage         = "https://github.com/fullc0de/HKKTagWriteView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
