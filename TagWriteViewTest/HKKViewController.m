@@ -44,6 +44,7 @@
     [_swiftTagView setBackgroundColor:[UIColor greenColor]];
     [_swiftTagView setDeleteButtonBackgroundImage:[UIImage imageNamed:@"btn_tag_delete"] state:UIControlStateNormal];
     [_swiftTagView addTags:@[@"sw_hello", @"sw_UX", @"sw_congratulation"]];
+    
 #endif
 }
 

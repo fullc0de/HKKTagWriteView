@@ -218,6 +218,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = HKK;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = rhlab;
 				TargetAttributes = {
