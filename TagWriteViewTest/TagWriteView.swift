@@ -369,10 +369,9 @@ public class TagWriteView : UIView
         inputBaseView.layer.borderWidth = 1.0
         inputBaseView.layer.cornerRadius = inputBaseView.bounds.height * 0.5
         
-        var inputFieldRect = inputBaseView.bounds
-        inputFieldRect.size.height = 20.0
-        inputFieldRect.origin.y = (inputBaseView.bounds.height - 20.0) * 0.5
-        tagInputView.frame = inputFieldRect
+        tagInputView.frame = inputBaseView.bounds
+        tagInputView.frame.origin.y = font.descender * 0.5 // It's a nagetive number
+        tagInputView.frame.size.height = self.bounds.height - verticalInsetForTag.top
         
         var contentSize = scrollView.contentSize
         contentSize.width = accumX + inputRect.size.width + 20.0
