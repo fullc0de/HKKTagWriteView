@@ -49,6 +49,7 @@
     [self initControls];
     
     [self reArrangeSubViews];
+    [super awakeFromNib];
 }
 
 #pragma mark - Property Get / Set
