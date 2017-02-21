@@ -220,8 +220,9 @@ public class TagWriteView : UIView
     private func initControls() {
         scrollView = UIScrollView(frame: self.bounds)
         scrollView.backgroundColor = UIColor.clear
-        scrollView.scrollsToTop = false;
-        scrollView.showsVerticalScrollIndicator = false;
+        scrollView.scrollsToTop = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         addSubview(scrollView)
         scrollView.applyMarginConstraint(margin: UIEdgeInsets.zero)
