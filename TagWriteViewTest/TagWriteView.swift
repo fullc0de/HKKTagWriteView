@@ -59,7 +59,7 @@ public class TagWriteView : UIView
         }
     }
     
-    public var delegate: TagWriteViewDelegate?
+    public weak var delegate: TagWriteViewDelegate?
     
     public var scrollView: UIScrollView!
     public var inputBaseView: UIView!
