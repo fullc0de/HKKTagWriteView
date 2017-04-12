@@ -157,7 +157,7 @@ public class TagWriteView : UIView
         tagInputView.text = ""
         addTagViewToLast(newTag, animated: animated)
         setNeedsLayout()
-        delegate?.tagWriteView?(view: self, didChangeText: newTag)
+        delegate?.tagWriteView?(view: self, didMakeTag: newTag)
     }
     
     public func removeTag(_ tag: String, animated: Bool) {
