@@ -153,7 +153,11 @@ public class TagWriteView : UIView
     }
     
     public func addTagToLast(_ tag: String, animated: Bool) {
-        let newTag = tag.trimmingCharacters(in: .whitespaces)
+        let newTag = tag.trimmingCharacters(in: CharacterSet(charactersIn: " \n\t\(CharacterForDetectingBackspaceDeletion)"))
+        if newTag.characters.count == 0 {
+            return
+        }
+        
         for t in tagsMade {
             if newTag == t {
                 return
@@ -487,10 +491,16 @@ extension TagWriteView: UITextFieldDelegate {
     
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate?.tagWriteViewDidBeginEditing?(view: self)
+        if tagInputView.text!.characters.count == 0 {
+            tagInputView.text = CharacterForDetectingBackspaceDeletion
+        }
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.tagWriteViewDidEndEditing?(view: self)
+        if tagInputView.text! == CharacterForDetectingBackspaceDeletion {
+            tagInputView.text = ""
+        }
     }
 }
 
