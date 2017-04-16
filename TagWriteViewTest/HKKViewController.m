@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 rhlab. All rights reserved.
 //
 
+#import "Foundation/Foundation.h"
 #import "HKKViewController.h"
 #import "HKKTagWriteView.h"
 #if __clang__ && (__clang_major__ >= 6)
@@ -38,16 +39,17 @@
     
 #if __clang__ && (__clang_major__ >= 6)
     _swiftTagView.allowToUseSingleSpace = YES;
-    _swiftTagView.verticalInsetForTag = UIEdgeInsetsMake(9, 0, 6, 0);
+    _swiftTagView.insetForTag = UIEdgeInsetsMake(9, 7, 6, 7);
     CGRect deleteFrame = _swiftTagView.deleteButton.frame;
     deleteFrame.size = CGSizeMake(17, 17);
     _swiftTagView.deleteButton.frame = deleteFrame;
     _swiftTagView.scrollView.contentInset = UIEdgeInsetsMake(0, 20.0, 0, 20.0);
+    _swiftTagView.placeHolderForInput = [[NSAttributedString alloc] initWithString:@"input tag.." attributes: @{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
+    _swiftTagView.minimumWidthOfTag = 80.0;
     _swiftTagView.deleteButton.backgroundColor = [UIColor clearColor];
     [_swiftTagView setBackgroundColor:[UIColor greenColor]];
     [_swiftTagView setDeleteButtonBackgroundImage:[UIImage imageNamed:@"btn_tag_delete"] state:UIControlStateNormal];
     [_swiftTagView addTags:@[@"sw_hello", @"sw_UX", @"sw_congratulation"]];
-    
 #endif
 }
 

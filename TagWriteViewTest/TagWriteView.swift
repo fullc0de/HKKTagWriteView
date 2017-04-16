@@ -10,6 +10,8 @@ import UIKit
 import Foundation
 import QuartzCore
 
+let CharacterForDetectingBackspaceDeletion = "\u{200B}"
+
 public class TagWriteView : UIView
 {
     
@@ -47,7 +49,13 @@ public class TagWriteView : UIView
     public var maxTagLength = 20   // maximum length of a tag
     public var tagGap: CGFloat = 4.0   // a gap between tags
     public var allowToUseSingleSpace = false   // if true, space character is allowed to use
-    public var verticalInsetForTag = UIEdgeInsets.zero  // 'top' and 'bottom' properties are only available. set vertical margin to each tags.
+    public var insetForTag = UIEdgeInsets.zero  // right inset is not avaliable. a tag has same length for horizontal margins(left, right) based on left value
+    public var minimumWidthOfTag: CGFloat = 50.0
+    public var placeHolderForInput: NSAttributedString! {
+        didSet {
+            tagInputView.attributedPlaceholder = placeHolderForInput
+        }
+    }
     
     public var focusOnAddTag: Bool = false {
         didSet {
@@ -63,7 +71,7 @@ public class TagWriteView : UIView
     
     public var scrollView: UIScrollView!
     public var inputBaseView: UIView!
-    public var tagInputView: UITextView!
+    public var tagInputView: UITextField!
     public var deleteButton: UIButton!
     
     // MARK: Private Properties
@@ -95,8 +103,8 @@ public class TagWriteView : UIView
         super.layoutSubviews()
         for btn in tagViews {
             var newFrame = btn.frame
-            newFrame.size.height = self.bounds.size.height - (verticalInsetForTag.top + verticalInsetForTag.bottom)
-            newFrame.origin.y = verticalInsetForTag.top
+            newFrame.size.height = self.bounds.size.height - (insetForTag.top + insetForTag.bottom)
+            newFrame.origin.y = insetForTag.top
             btn.frame = newFrame
             
             btn.layer.cornerRadius = newFrame.size.height * 0.5
@@ -107,7 +115,7 @@ public class TagWriteView : UIView
     
     // MARK: Interfaces
     public func clear() {
-        tagInputView.text = ""
+        tagInputView.text = "\(CharacterForDetectingBackspaceDeletion)"
         tagsMade.removeAll(keepingCapacity: false)
         rearrangeSubViews()
     }
@@ -154,7 +162,7 @@ public class TagWriteView : UIView
         
         tagsMade.append(newTag)
         
-        tagInputView.text = ""
+        tagInputView.text = "\(CharacterForDetectingBackspaceDeletion)"
         addTagViewToLast(newTag, animated: animated)
         setNeedsLayout()
         delegate?.tagWriteView?(view: self, didMakeTag: newTag)
@@ -231,11 +239,10 @@ public class TagWriteView : UIView
         inputBaseView.backgroundColor = UIColor.clear
         scrollView.addSubview(inputBaseView)
         
-        tagInputView = UITextView(frame: inputBaseView.bounds)
+        tagInputView = UITextField(frame: inputBaseView.bounds)
         tagInputView.delegate = self
         tagInputView.autocorrectionType = UITextAutocorrectionType.no
         tagInputView.returnKeyType = UIReturnKeyType.done
-        tagInputView.scrollsToTop = false
         tagInputView.autoresizingMask = UIViewAutoresizing.flexibleWidth
         inputBaseView.addSubview(tagInputView)
         
@@ -292,7 +299,7 @@ public class TagWriteView : UIView
         btnFrame.origin.x = posx
         
         let temp = tag as NSString
-        btnFrame.size.width = temp.size(attributes: [NSFontAttributeName:font]).width + (tagButton.layer.cornerRadius * 2.0) + 20.0
+        btnFrame.size.width = temp.size(attributes: [NSFontAttributeName:font]).width + (tagButton.layer.cornerRadius * 2.0) + insetForTag.left + insetForTag.left
         //        btnFrame.size.height = self.frame.size.height - 13.0
         
         tagButton.layer.cornerRadius = btnFrame.size.height * 0.5
@@ -302,8 +309,8 @@ public class TagWriteView : UIView
     }
     
     fileprivate func deleteBackspace() {
-        let text: String = tagInputView.text
-        if text.characters.count == 0 {
+        let text: String = tagInputView.text!
+        if text.characters.count == 1 {
             if readyToDelete {
                 if tagsMade.count > 0 {
                     let deletedTag = tagsMade[tagsMade.endIndex - 1]
@@ -343,18 +350,20 @@ public class TagWriteView : UIView
         let accumX = posXForObjectNextToLastTagView()
         var inputRect = inputBaseView.frame
         inputRect.origin.x = accumX
-        inputRect.origin.y = verticalInsetForTag.top
-        inputRect.size.width = widthForInputView(tagString: tagInputView.text)
-        inputRect.size.height = self.bounds.height - (verticalInsetForTag.top + verticalInsetForTag.bottom)
+        inputRect.origin.y = insetForTag.top
+        inputRect.size.width = widthForInputView(tagString: tagInputView.text!) + insetForTag.left + insetForTag.left
+        inputRect.size.height = self.bounds.height - (insetForTag.top + insetForTag.bottom)
         
         inputBaseView.frame = inputRect
         inputBaseView.layer.borderColor = tagBackgroundColor.cgColor
         inputBaseView.layer.borderWidth = 1.0
         inputBaseView.layer.cornerRadius = inputBaseView.bounds.height * 0.5
         
-        tagInputView.frame = inputBaseView.bounds
-        tagInputView.frame.origin.y = font.descender * 0.5 // It's a nagetive number
-        tagInputView.frame.size.height = self.bounds.height - verticalInsetForTag.top
+        let tagTextFieldRect = CGRect(x: insetForTag.left,
+                                      y: font.descender * 0.2,
+                                      width: widthForInputView(tagString: tagInputView.text!),
+                                      height: inputRect.size.height)
+        tagInputView.frame = tagTextFieldRect
         
         var contentSize = scrollView.contentSize
         contentSize.width = accumX + inputRect.size.width + 20.0
@@ -413,16 +422,16 @@ public class TagWriteView : UIView
     
     fileprivate func widthForInputView(tagString tag: String) -> CGFloat {
         let temp = tag as NSString
-        return max(50.0, temp.size(attributes: [NSFontAttributeName:font]).width + 25.0)
+        return max(minimumWidthOfTag, temp.size(attributes: [NSFontAttributeName:font]).width + 25.0)
     }
     
 }
 
 // MARK: UITextViewDelegate
-extension TagWriteView: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let piece: String = text
-        let t: String = textView.text
+extension TagWriteView: UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let piece: String = string
+        let t: String = textField.text!
         
         let pieceCount = piece.characters.count
         let textCount = t.characters.count
@@ -430,10 +439,10 @@ extension TagWriteView: UITextViewDelegate {
         if isFinishLetter(piece) {
             if textCount > 0 {
                 addTagToLast(t, animated: true)
-                textView.text = ""
+                textField.text = "\(CharacterForDetectingBackspaceDeletion)"
             }
             if piece == "\n" {
-                textView.resignFirstResponder()
+                textField.resignFirstResponder()
             }
             return false
         }
@@ -443,7 +452,7 @@ extension TagWriteView: UITextViewDelegate {
         var newText: String?
         
         if pieceCount == 0 {
-            if textCount > 0 {
+            if textCount > 1 {
                 let loc = textCount - range.length
                 let startIndex = t.startIndex
                 let endIndex = t.index(t.startIndex, offsetBy: loc)
@@ -471,18 +480,16 @@ extension TagWriteView: UITextViewDelegate {
         
         setScrollOffsetToMakeInputViewVisible()
         
+        delegate?.tagWriteView?(view: self, didChangeText: textField.text)
+        
         return true
     }
     
-    public func textViewDidChange(_ textView: UITextView) {
-        delegate?.tagWriteView?(view: self, didChangeText: textView.text)
-    }
-    
-    public func textViewDidBeginEditing(_ textView: UITextView) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate?.tagWriteViewDidBeginEditing?(view: self)
     }
     
-    public func textViewDidEndEditing(_ textView: UITextView) {
+    public func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.tagWriteViewDidEndEditing?(view: self)
     }
 }
