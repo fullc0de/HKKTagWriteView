@@ -209,9 +209,10 @@ public class TagWriteView : UIView
             center.y -= (btn.bounds.height * 0.5) - (deleteButton.bounds.height * 0.2)
             deleteButton.center = center
             deleteButton.tag = btn.tag
-            if deleteButton.superview == nil {
-                scrollView.addSubview(deleteButton)
+            if deleteButton.superview != nil {
+                deleteButton.removeFromSuperview()
             }
+            scrollView.addSubview(deleteButton)
             deleteButton.isHidden = false
         }
     }
