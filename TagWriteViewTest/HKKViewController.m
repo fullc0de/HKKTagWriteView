@@ -16,7 +16,8 @@
 
 @interface HKKViewController ()
 <
-    HKKTagWriteViewDelegate
+    HKKTagWriteViewDelegate,
+    TagWriteViewDelegate
 >
 
 @property (nonatomic, assign) IBOutlet HKKTagWriteView *tagWriteView;
@@ -38,6 +39,7 @@
     [_tagWriteView addTags:@[@"hello", @"UX", @"congratulation", @"google", @"ios", @"android"]];
     
 #if __clang__ && (__clang_major__ >= 6)
+    _swiftTagView.delegate = self;
     _swiftTagView.allowToUseSingleSpace = YES;
     _swiftTagView.insetForTag = UIEdgeInsetsMake(9, 7, 6, 7);
     CGRect deleteFrame = _swiftTagView.deleteButton.frame;
@@ -70,4 +72,23 @@
     NSLog(@"removed tag = %@", tag);
 }
 
+- (BOOL)tagWriteView:(HKKTagWriteView *)view shouldChangeText:(NSString *)text
+{
+    return text.length < 10;
+}
+
+- (void)tagWriteViewWithView:(TagWriteView * _Null_unspecified)view didMakeTag:(NSString * _Null_unspecified)tag
+{
+    NSLog(@"[swift] added tag = %@", tag);
+}
+
+- (void)tagWriteViewWithView:(TagWriteView * _Null_unspecified)view didRemoveTag:(NSString * _Null_unspecified)tag
+{
+    NSLog(@"[swift] removed tag = %@", tag);
+}
+
+- (BOOL)tagWriteViewWithView:(TagWriteView * _Null_unspecified)view shouldChangeText:(NSString * _Null_unspecified)text
+{
+    return text.length < 10;
+}
 @end

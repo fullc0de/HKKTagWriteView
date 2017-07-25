@@ -452,6 +452,11 @@ extension TagWriteView: UITextFieldDelegate {
             return false
         }
         
+        let expected = NSString(string: t).replacingCharacters(in: range, with: piece)
+        if let delegate = delegate, delegate.tagWriteView?(view: self, shouldChangeText: expected) == false {
+            return false
+        }
+        
         let currentWidth: CGFloat = widthForInputView(tagString: t)
         var newWidth: CGFloat = 0.0
         var newText: String?
@@ -509,6 +514,7 @@ extension TagWriteView: UITextFieldDelegate {
     @objc optional func tagWriteViewDidBeginEditing(view: TagWriteView!)
     @objc optional func tagWriteViewDidEndEditing(view: TagWriteView!)
     
+    @objc optional func tagWriteView(view: TagWriteView!, shouldChangeText text: String!) -> Bool
     @objc optional func tagWriteView(view: TagWriteView!, didChangeText text: String!)
     @objc optional func tagWriteView(view: TagWriteView!, didMakeTag tag: String!)
     @objc optional func tagWriteView(view: TagWriteView!, didRemoveTag tag: String!)

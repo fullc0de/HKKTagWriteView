@@ -52,6 +52,7 @@
 - (void)tagWriteView:(HKKTagWriteView *)view didChangeText:(NSString *)text;
 - (void)tagWriteView:(HKKTagWriteView *)view didMakeTag:(NSString *)tag;
 - (void)tagWriteView:(HKKTagWriteView *)view didRemoveTag:(NSString *)tag;
+- (BOOL)tagWriteView:(HKKTagWriteView *)view shouldChangeText:(NSString *)text;
 @end
 
 

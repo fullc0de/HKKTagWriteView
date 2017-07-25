@@ -508,6 +508,14 @@
         return NO;
     }
     
+    if ([_delegate respondsToSelector:@selector(tagWriteView:shouldChangeText:)])
+    {
+        NSString *temp = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        if ([_delegate tagWriteView:self shouldChangeText:temp] == NO) {
+            return NO;
+        }
+    }
+    
     CGFloat currentWidth = [self widthForInputViewWithText:textView.text];
     CGFloat newWidth = 0;
     NSString *newText = nil;
