@@ -223,7 +223,11 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = rhlab;
 				TargetAttributes = {
+					DA3735641880DAF300241916 = {
+						LastSwiftMigration = 0900;
+					};
 					DA3735851880DAF300241916 = {
+						LastSwiftMigration = 0900;
 						TestTargetID = DA3735641880DAF300241916;
 					};
 				};
@@ -424,6 +428,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TagWriteViewTest/TagWriteViewTest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -440,6 +446,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rhlab.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TagWriteViewTest/TagWriteViewTest-Bridging-Header.h";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -463,6 +471,8 @@
 				INFOPLIST_FILE = "TagWriteViewTestTests/TagWriteViewTestTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rhlab.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -482,6 +492,8 @@
 				INFOPLIST_FILE = "TagWriteViewTestTests/TagWriteViewTestTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rhlab.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

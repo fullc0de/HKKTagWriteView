@@ -67,7 +67,7 @@ public class TagWriteView : UIView
         }
     }
     
-    public weak var delegate: TagWriteViewDelegate?
+    public weak var delegate: TagWriteViewDelegate? = nil
     
     public var scrollView: UIScrollView!
     public var inputBaseView: UIView!
@@ -197,7 +197,7 @@ public class TagWriteView : UIView
     }
     
     // MARK: UI Actions
-    func tagButtonDidPushed(sender: UIButton) {
+    @objc func tagButtonDidPushed(sender: UIButton) {
         let btn = sender
         
         if deleteButton.isHidden == false && btn.tag == deleteButton.tag {
@@ -217,7 +217,7 @@ public class TagWriteView : UIView
         }
     }
     
-    func deleteButtonDidPush(sender: Any) {
+    @objc func deleteButtonDidPush(sender: Any) {
         if tagsMade.count <= deleteButton.tag {
             return
         }
@@ -304,7 +304,7 @@ public class TagWriteView : UIView
         btnFrame.origin.x = posx
         
         let temp = tag as NSString
-        btnFrame.size.width = temp.size(attributes: [NSFontAttributeName:font]).width + (tagButton.layer.cornerRadius * 2.0) + insetForTag.left + insetForTag.left
+        btnFrame.size.width = temp.size(withAttributes: [NSAttributedStringKey.font:font]).width + (tagButton.layer.cornerRadius * 2.0) + insetForTag.left + insetForTag.left
         //        btnFrame.size.height = self.frame.size.height - 13.0
         
         tagButton.layer.cornerRadius = btnFrame.size.height * 0.5
@@ -427,7 +427,7 @@ public class TagWriteView : UIView
     
     fileprivate func widthForInputView(tagString tag: String) -> CGFloat {
         let temp = tag as NSString
-        return max(minimumWidthOfTag, temp.size(attributes: [NSFontAttributeName:font]).width + 25.0)
+        return max(minimumWidthOfTag, temp.size(withAttributes: [NSAttributedStringKey.font:font]).width + 25.0)
     }
     
 }
@@ -466,7 +466,7 @@ extension TagWriteView: UITextFieldDelegate {
                 let loc = textCount - range.length
                 let startIndex = t.startIndex
                 let endIndex = t.index(t.startIndex, offsetBy: loc)
-                newText = t[startIndex...endIndex]
+                newText = String(t[startIndex...endIndex])
             } else {
                 deleteBackspace()
                 return false
