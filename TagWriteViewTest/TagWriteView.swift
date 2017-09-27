@@ -49,6 +49,7 @@ public class TagWriteView : UIView
     public var maxTagLength = 20   // maximum length of a tag
     public var tagGap: CGFloat = 4.0   // a gap between tags
     public var allowToUseSingleSpace = false   // if true, space character is allowed to use
+    public var allowDuplication = false
     public var insetForTag = UIEdgeInsets.zero  // right inset is not avaliable. a tag has same length for horizontal margins(left, right) based on left value
     public var minimumWidthOfTag: CGFloat = 50.0
     public var placeHolderForInput: NSAttributedString! {
@@ -158,10 +159,8 @@ public class TagWriteView : UIView
             return
         }
         
-        for t in tagsMade {
-            if newTag == t {
-                return
-            }
+        if allowDuplication == false, tagsMade.contains(newTag) {
+            return
         }
         
         tagsMade.append(newTag)

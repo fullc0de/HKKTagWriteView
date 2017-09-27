@@ -41,6 +41,7 @@
 #if __clang__ && (__clang_major__ >= 6)
     _swiftTagView.delegate = self;
     _swiftTagView.allowToUseSingleSpace = YES;
+    _swiftTagView.allowDuplication = YES;
     _swiftTagView.insetForTag = UIEdgeInsetsMake(9, 7, 6, 7);
     CGRect deleteFrame = _swiftTagView.deleteButton.frame;
     deleteFrame.size = CGSizeMake(17, 17);
