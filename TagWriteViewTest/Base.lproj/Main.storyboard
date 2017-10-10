@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,25 +18,25 @@
                         <viewControllerLayoutGuide type="bottom" id="IzG-d2-DNS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Xb-rU-G2V" customClass="HKKTagWriteView">
-                                <rect key="frame" x="11" y="182" width="298" height="40"/>
-                                <color key="backgroundColor" red="0.96823030269999999" green="1" blue="0.79970299219999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="11" y="182" width="353" height="40"/>
+                                <color key="backgroundColor" red="0.96823030269999999" green="1" blue="0.79970299219999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Edj-kv-mhB"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3r-dv-ahI" customClass="TagWriteView" customModule="TagWriteViewTest" customModuleProvider="target">
-                                <rect key="frame" x="11" y="264" width="298" height="40"/>
-                                <color key="backgroundColor" red="0.62957226889999995" green="0.93149657269999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="11" y="264" width="353" height="40"/>
+                                <color key="backgroundColor" red="0.62957226889999995" green="0.93149657269999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="nrl-bl-ftZ"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Objective-C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJH-WS-MgX">
-                                <rect key="frame" x="11" y="157" width="298" height="21"/>
+                                <rect key="frame" x="11" y="157" width="353" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="yg3-wt-6EI"/>
                                 </constraints>
@@ -41,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swift" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRg-bw-Ogg">
-                                <rect key="frame" x="11" y="239" width="298" height="21"/>
+                                <rect key="frame" x="11" y="239" width="353" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="sa3-Uk-IPS"/>
                                 </constraints>
@@ -49,13 +53,21 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZj-hP-iea">
+                                <rect key="frame" x="130" y="343" width="114" height="30"/>
+                                <state key="normal" title="add inputted tag"/>
+                                <connections>
+                                    <action selector="addInputtedTagDidPush:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wyd-hf-NBl"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="w3r-dv-ahI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="2GW-m2-47Y"/>
                             <constraint firstAttribute="trailing" secondItem="bRg-bw-Ogg" secondAttribute="trailing" constant="11" id="3Xq-SI-dh9"/>
                             <constraint firstItem="bRg-bw-Ogg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="3uj-gI-Dy2"/>
                             <constraint firstAttribute="trailing" secondItem="IJH-WS-MgX" secondAttribute="trailing" constant="11" id="Efa-2k-Due"/>
+                            <constraint firstItem="UZj-hP-iea" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="JBp-0m-etL"/>
                             <constraint firstAttribute="trailing" secondItem="w3r-dv-ahI" secondAttribute="trailing" constant="11" id="QDM-hY-5QY"/>
                             <constraint firstItem="3Xb-rU-G2V" firstAttribute="top" secondItem="IJH-WS-MgX" secondAttribute="bottom" constant="4" id="RJ2-Ka-RNW"/>
                             <constraint firstItem="w3r-dv-ahI" firstAttribute="top" secondItem="3Xb-rU-G2V" secondAttribute="bottom" constant="42" id="RrT-Sb-d52"/>
@@ -63,10 +75,12 @@
                             <constraint firstItem="w3r-dv-ahI" firstAttribute="top" secondItem="bRg-bw-Ogg" secondAttribute="bottom" constant="4" id="VdX-Ck-0pF"/>
                             <constraint firstItem="3Xb-rU-G2V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="bWw-7C-cYi"/>
                             <constraint firstItem="IJH-WS-MgX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="11" id="eMa-0E-Shd"/>
+                            <constraint firstItem="UZj-hP-iea" firstAttribute="top" secondItem="w3r-dv-ahI" secondAttribute="bottom" constant="39" id="o4z-Qm-xyS"/>
                             <constraint firstItem="3Xb-rU-G2V" firstAttribute="top" secondItem="VIk-gI-FOx" secondAttribute="bottom" constant="162" id="qAc-VS-bgQ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addInputtedTagButton" destination="UZj-hP-iea" id="Jak-fT-VA6"/>
                         <outlet property="swiftTagView" destination="w3r-dv-ahI" id="DDG-ic-S9j"/>
                         <outlet property="tagWriteView" destination="3Xb-rU-G2V" id="MBc-f9-lKI"/>
                     </connections>
@@ -76,12 +90,4 @@
             <point key="canvasLocation" x="-1" y="125"/>
         </scene>
     </scenes>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
-    </simulatedMetricsContainer>
 </document>

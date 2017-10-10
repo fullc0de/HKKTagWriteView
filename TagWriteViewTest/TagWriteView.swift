@@ -191,6 +191,11 @@ public class TagWriteView : UIView
         delegate?.tagWriteView?(view: self, didRemoveTag: tag)
     }
     
+    public func submitInputtedTag(animated: Bool = true) {
+        guard let inputtedTag = tagInputView.text?.trimmingCharacters(in: CharacterSet(charactersIn: " \n\t\(CharacterForDetectingBackspaceDeletion)")) else { return }
+        addTagToLast(inputtedTag, animated: animated)
+    }
+    
     public func setDeleteButtonBackgroundImage(_ image: UIImage?, state: UIControlState) {
         deleteButton.setBackgroundImage(image, for: state)
     }
