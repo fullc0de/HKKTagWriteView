@@ -76,11 +76,11 @@ public class TagWriteView : UIView
     public var deleteButton: UIButton!
     
     // MARK: Private Properties
-    fileprivate var tagViews = [UIButton]()
-    fileprivate var tagsMade = [String]()
+    private var tagViews = [UIButton]()
+    private var tagsMade = [String]()
     
-    fileprivate var readyToDelete = false
-    fileprivate var readyToFinishMaking = false
+    private var readyToDelete = false
+    private var readyToFinishMaking = false
     
     
     // MARK: Initializers
@@ -155,7 +155,7 @@ public class TagWriteView : UIView
     
     public func addTagToLast(_ tag: String, animated: Bool) {
         let newTag = tag.trimmingCharacters(in: CharacterSet(charactersIn: " \n\t\(CharacterForDetectingBackspaceDeletion)"))
-        if newTag.characters.count == 0 {
+        if newTag.count == 0 {
             return
         }
         
@@ -319,7 +319,7 @@ public class TagWriteView : UIView
     
     fileprivate func deleteBackspace() {
         let text: String = tagInputView.text!
-        if text.characters.count == 1 {
+        if text.count == 1 {
             if readyToDelete {
                 if tagsMade.count > 0 {
                     let deletedTag = tagsMade[tagsMade.endIndex - 1]
@@ -442,8 +442,8 @@ extension TagWriteView: UITextFieldDelegate {
         let piece: String = string
         let t: String = textField.text!
         
-        let pieceCount = piece.characters.count
-        let textCount = t.characters.count
+        let pieceCount = piece.count
+        let textCount = t.count
         
         if isFinishLetter(piece) {
             if textCount > 0 {
@@ -501,7 +501,7 @@ extension TagWriteView: UITextFieldDelegate {
     
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate?.tagWriteViewDidBeginEditing?(view: self)
-        if tagInputView.text!.characters.count == 0 {
+        if tagInputView.text!.count == 0 {
             tagInputView.text = CharacterForDetectingBackspaceDeletion
         }
     }
