@@ -23,6 +23,8 @@
 @property (nonatomic, assign) IBOutlet HKKTagWriteView *tagWriteView;
 #if __clang__ && (__clang_major__ >= 6)
 @property (nonatomic, weak) IBOutlet TagWriteView *swiftTagView;
+@property (weak, nonatomic) IBOutlet UIButton *addInputtedTagButton;
+
 #endif
 @end
 
@@ -41,6 +43,7 @@
 #if __clang__ && (__clang_major__ >= 6)
     _swiftTagView.delegate = self;
     _swiftTagView.allowToUseSingleSpace = YES;
+    _swiftTagView.allowDuplication = YES;
     _swiftTagView.insetForTag = UIEdgeInsetsMake(9, 7, 6, 7);
     CGRect deleteFrame = _swiftTagView.deleteButton.frame;
     deleteFrame.size = CGSizeMake(17, 17);
@@ -60,6 +63,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)addInputtedTagDidPush:(id)sender {
+#if __clang__ && (__clang_major__ >= 6)
+    [_swiftTagView submitInputtedTagWithAnimated:YES];
+#endif
+}
+
 
 #pragma mark - HKKTagWriteViewDelegate
 - (void)tagWriteView:(HKKTagWriteView *)view didMakeTag:(NSString *)tag
