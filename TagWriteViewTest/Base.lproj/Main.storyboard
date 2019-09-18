@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -54,7 +54,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZj-hP-iea">
-                                <rect key="frame" x="130" y="343" width="114" height="30"/>
+                                <rect key="frame" x="130.5" y="343" width="114" height="30"/>
                                 <state key="normal" title="add inputted tag"/>
                                 <connections>
                                     <action selector="addInputtedTagDidPush:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wyd-hf-NBl"/>
@@ -81,13 +81,13 @@
                     </view>
                     <connections>
                         <outlet property="addInputtedTagButton" destination="UZj-hP-iea" id="Jak-fT-VA6"/>
-                        <outlet property="swiftTagView" destination="w3r-dv-ahI" id="DDG-ic-S9j"/>
+                        <outlet property="swiftTagView" destination="w3r-dv-ahI" id="gDn-cL-0zi"/>
                         <outlet property="tagWriteView" destination="3Xb-rU-G2V" id="MBc-f9-lKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1" y="125"/>
+            <point key="canvasLocation" x="-1.4492753623188408" y="83.705357142857139"/>
         </scene>
     </scenes>
 </document>
